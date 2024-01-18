@@ -1,0 +1,33 @@
+version: '3'
+services:
+    web:
+        image: nginx
+        ports:
+        - "${WEB_PORT}"
+        container_name: mon_container_nginx
+        volumes:
+            - ./html:/usr/share/nginx/html
+        networks:
+            - test_reseau
+
+    database:
+        image: postgres
+        environment:
+
+            POSTGRES_USER: example_user
+            POSTGRES_PASSWORD: password
+            POSTGRES_DB: example_db
+        ports:
+        - "5432:5432"
+        container_name: mon_container_postgres
+        volumes:
+            - db-data-volume:/var/lib/postgresql/data
+        networks:
+            - test_reseau
+
+volumes:
+    html-volume:
+    db-data-volume:
+
+networks:
+    test_reseau:
